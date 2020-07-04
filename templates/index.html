@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sketch a function</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='drawingboard.js') }}"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='drawingboard.css') }}">
+    <style>
+        #canvas{
+            position:absolute;
+            width:300px;
+            height:300px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" >
+        <div class="row">
+            <img src="{{ url_for('static', filename='img/gridlines.jpg') }}" width="300" height="300" alt="" />
+            <div id="canvas"></div>
+        </div>
+    </div>
+    <div class="container">
+        <button onclick="get_best_fit()" type="button" class="btn btn-light">Get Best Fit</button>
+    </div>
+
+
+
+    <script src="{{ url_for('static', filename='onstart.js') }}"></script>
+</body>
+</html>
