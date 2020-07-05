@@ -9,5 +9,5 @@ class BaseModel(ABC):
         return "Base Model"
 
     @abstractmethod
-    def get_best_fit(complexity_level):
-        return Function("Base Model", 2, "y = 2x + 5", np.random.rand((300, 300, 4)), np.random.rand((300, 300, 4)), 3.33)
+    def get_best_fit(complexity_level, y_values):
+        return Function("Base Model", 2, "y = 2x + 5", y_values, y_values, 3.33)

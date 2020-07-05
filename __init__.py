@@ -14,13 +14,13 @@ def get_best_fit():
         return jsonify({"error": "empty"})
 
     base64_string = payload['imgInput'].split(",")[1]
-    img_array = img_parser.to_array(base64_string)
+    y_values = img_parser.base64_to_y_values(base64_string)
 
     ## Models here ##
-    
+
     ## ##
 
-    base64 = img_parser.to_base64(img_array)
+    base64 = img_parser.y_values_to_base64(y_values)
     
     return jsonify({"imgOutput": base64})
 
