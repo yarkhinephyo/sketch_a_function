@@ -2,9 +2,7 @@ var myBoard = new DrawingBoard.Board("canvas", {
     background: false,
     color: "#000000",
     size: 1,
-    controls: [
-        { Navigation: { back: false, forward: false } }
-    ],
+    controls: false,
     webStorage: 'local'
 });
 
@@ -20,5 +18,13 @@ async function get_best_fit(){
     });
 
     const myJson = await response.json(); //extract JSON from the http response
-    console.log(myJson);
+
+    if(!myJson["error"]){
+        const display_canvas = document.getElementById("display_canvas");
+        display_canvas.src = "data:image/png;base64," + myJson["imgOutput"];
+    }
+}
+
+function erase_drawing(){
+    myBoard.reset({ background: true });
 }

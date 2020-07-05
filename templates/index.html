@@ -9,26 +9,39 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='drawingboard.css') }}">
     <style>
-        #canvas{
-            position:absolute;
+        .board {
             width:300px;
             height:300px;
+        }
+        .bring-to-front {
+            position:absolute;
         }
     </style>
 </head>
 <body>
+    <div class="row justify-content-center">
+        <div class="mt-1 col-lg-4">
+            <div class="container" >
+                <div class="row">
+                    <img src="{{ url_for('static', filename='img/gridlines.jpg') }}" class="board" alt="" />
+                    <div id="canvas" class="bring-to-front board"></div>
+                </div>
+            </div>
+            <div class="mt-1 container">
+                <button onclick="get_best_fit()" type="button" class="btn btn-secondary">Get Best Fit</button>
+                <button onclick="erase_drawing()" type="button" class="btn btn-secondary">Undo</button>
+            </div>
+        </div>
 
-    <div class="container" >
-        <div class="row">
-            <img src="{{ url_for('static', filename='img/gridlines.jpg') }}" width="300" height="300" alt="" />
-            <div id="canvas"></div>
+        <div class="mt-1 col-lg-4">
+            <div class="mt-1 container" >
+                <div class="row">
+                    <img src="{{ url_for('static', filename='img/gridlines.jpg') }}" class="board" alt="" />
+                    <img id="display_canvas" class="bring-to-front board" alt="">
+                </div>
+            </div>
         </div>
     </div>
-    <div class="container">
-        <button onclick="get_best_fit()" type="button" class="btn btn-light">Get Best Fit</button>
-    </div>
-
-
 
     <script src="{{ url_for('static', filename='onstart.js') }}"></script>
 </body>
