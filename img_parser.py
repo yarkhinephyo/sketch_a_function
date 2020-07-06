@@ -4,7 +4,9 @@ import numpy as np
 import io
 
 import matplotlib.pyplot as plt
+import matplotlib
 
+matplotlib.use('Agg')
 
 def base64_to_array(base64_string):
     '''
@@ -18,8 +20,8 @@ def base64_to_array(base64_string):
 
 def base64_to_x_y(base64_string):
     '''
-    x = [np.nan, np.nan, -0.5, -0.4, -0.3, ... , 0.5, 0.6, np.nan]
-    y = [np.nan, np.nan, -0.7, -0.5, -0.2, ... , 0.4, 0.6, np.nan]
+    x = [-0.5, -0.4, -0.3, ... , 0.5, 0.6]
+    y = [-0.7, -0.5, -0.2, ... , 0.4, 0.6]
     '''
     img_array = base64_to_array(base64_string)
 
@@ -47,7 +49,7 @@ def x_y_to_base64(input_xy, output_xy):
     x0, y0 = input_xy
     x1, y1 = output_xy
 
-    plt.figure()
+    fig = plt.figure()
     plt.plot(x0, y0, c='k')
     plt.plot(x1, y1, c='g')
     plt.xlim((-1,1))
@@ -60,6 +62,7 @@ def x_y_to_base64(input_xy, output_xy):
     img_bytes = buf.read()
 
     buf.close()
+    plt.close(fig=fig)
 
     base64_encoded_result_bytes = base64.b64encode(img_bytes)
     base64_encoded_result_str = base64_encoded_result_bytes.decode('ascii')

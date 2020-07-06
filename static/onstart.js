@@ -1,3 +1,13 @@
+$(document).ready(function() {
+
+    const $valueSpan = $('.valueSpan');
+    const $value = $('#slider');
+    $valueSpan.html($value.val());
+    $value.on('input change', () => {
+        $valueSpan.html($value.val());
+    });
+});
+
 var myBoard = new DrawingBoard.Board("canvas", {
     background: false,
     color: "#000000",
@@ -6,14 +16,20 @@ var myBoard = new DrawingBoard.Board("canvas", {
     webStorage: 'local'
 });
 
+var slider = document.getElementById("slider");
+
 async function get_best_fit(){
     console.log("Submitting drawing...");
     var img = myBoard.getImg();
     var imgInput = (myBoard.blankCanvas == img) ? '' : img;
+    var complexity = slider.value;
 
     const response = await fetch('/get_best_fit', {
         method: 'POST',
-        body: JSON.stringify({'imgInput': imgInput}), 
+        body: JSON.stringify({
+            'imgInput': imgInput,
+            'complexity': complexity
+        }), 
         headers: {'Content-Type': 'application/json'}
     });
 

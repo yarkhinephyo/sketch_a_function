@@ -21,20 +21,25 @@
 <body>
     <div class="row justify-content-center">
         <div class="mt-1 col-lg-4">
-            <div class="container" >
+            <div class="mt-2 container" >
                 <div class="row">
                     <img src="{{ url_for('static', filename='img/gridlines.jpg') }}" class="board" alt="" />
                     <div id="canvas" class="bring-to-front board"></div>
                 </div>
             </div>
-            <div class="mt-1 container">
+            <div class="mt-3 container">
+                <span class="label label-primary" style="font: size 2em;"><strong>Order</strong></span>
+                <input id="slider" class="border-0 ml-2 mr-2" type="range" min="0" max="5" />
+                <span class="font-weight-bold text-primary ml-2 mt-1 valueSpan"></span>
+            </div>
+            <div class="mt-3 container">
                 <button onclick="get_best_fit()" type="button" class="btn btn-secondary">Get Best Fit</button>
                 <button onclick="erase_drawing()" type="button" class="btn btn-secondary">Undo</button>
             </div>
         </div>
 
         <div class="mt-1 col-lg-4">
-            <div class="mt-1 container" >
+            <div class="mt-2 container" >
                 <div class="row">
                     <img src="{{ url_for('static', filename='img/gridlines.jpg') }}" class="board" alt="" />
                     <img id="display_canvas" class="bring-to-front board" alt="">

@@ -18,11 +18,12 @@ def get_best_fit():
         return jsonify({"error": "empty"})
 
     base64_string = payload['imgInput'].split(",")[1]
+    complexity_level = int(payload['complexity'])
     x0, y0 = img_parser.base64_to_x_y(base64_string)
 
     ## Models here ##
 
-    func1 = polyModel.get_best_fit(1, x0, y0)
+    func1 = polyModel.get_best_fit(complexity_level, x0, y0)
 
     ## ##
 
