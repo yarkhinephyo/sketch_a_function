@@ -2,10 +2,15 @@ from flask import Flask, redirect, url_for, request, render_template, jsonify
 import img_parser
 
 from models.PolynomialModel import PolynomialModel
+from models.LogarithmicModel import LogarithmicModel
+from models.model_eval import *
 
 app = Flask(__name__)
 
-polyModel = PolynomialModel()
+models = [
+    PolynomialModel(),
+    LogarithmicModel()
+]
 
 @app.route('/')
 def index():
@@ -21,15 +26,16 @@ def get_best_fit():
     complexity_level = int(payload['complexity'])
     x0, y0 = img_parser.base64_to_x_y(base64_string)
 
-    ## Models here ##
+    sorted_functions = sorted_functions_by_mse(models, complexity_level, x0, y0)
+    best_function = sorted_functions[0]
 
-    func1 = polyModel.get_best_fit(complexity_level, x0, y0)
-
-    ## ##
-
-    base64 = img_parser.x_y_to_base64((x0, y0), func1.output)
+    base64 = img_parser.x_y_to_base64((x0, y0), best_function.output)
     
-    return jsonify({"imgOutput": base64})
+    return jsonify({
+        "imgOutput": base64, 
+        "equation_string": best_function.equation_string,
+        "model_name": best_function.model_name
+    })
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

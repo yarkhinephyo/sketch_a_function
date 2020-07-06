@@ -17,6 +17,8 @@ var myBoard = new DrawingBoard.Board("canvas", {
 });
 
 var slider = document.getElementById("slider");
+var equation_string = document.getElementById("equation_string");
+var model_name = document.getElementById("model_name");
 
 async function get_best_fit(){
     console.log("Submitting drawing...");
@@ -38,6 +40,10 @@ async function get_best_fit(){
     if(!myJson["error"]){
         const display_canvas = document.getElementById("display_canvas");
         display_canvas.src = "data:image/png;base64," + myJson["imgOutput"];
+        equation_string.innerHTML = myJson["equation_string"];
+        model_name.innerHTML = myJson["model_name"];
+    } else {
+        erase_drawing()
     }
 }
 
