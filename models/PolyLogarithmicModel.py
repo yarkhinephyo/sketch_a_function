@@ -6,13 +6,13 @@ import math
 from numpy.polynomial.polynomial import polyfit
 from sklearn.metrics import mean_squared_error
 
-class LogarithmicModel(BaseModel):
+class PolyLogarithmicModel(BaseModel):
 
     def __init__(self):
         pass
 
     def get_model_name(self):
-        return "Logarithmic"
+        return "PolyLogarithmic"
 
     def get_best_fit(self, complexity_level, x0, y0):
 
@@ -27,4 +27,4 @@ class LogarithmicModel(BaseModel):
 
         equation_string = " + ".join([f"({round(coef[i], 1)})(log x)^{i}" for i in range(len(coef))])
 
-        return Function("Logarithmic", complexity_level, f"y = {equation_string}", (x0, y1), mse)
+        return Function("PolyLogarithmic", complexity_level, f"y = {equation_string}", (x0, y1), mse)

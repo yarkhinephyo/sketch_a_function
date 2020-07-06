@@ -44,7 +44,7 @@ async function get_best_fit(){
         display_canvas.src = "data:image/png;base64," + myJson["imgOutput"];
         equation_string.innerHTML = myJson["equation_string"];
         model_name.innerHTML = myJson["model_name"];
-        mse.innerHTML = myJson["mse"];
+        mse.innerHTML = "MSE: " + myJson["mse"];
     } else {
         erase_model();
     }

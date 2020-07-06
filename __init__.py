@@ -7,14 +7,17 @@ app = Flask(__name__)
 
 models = [
     PolynomialModel(),
-    LogarithmicModel(),
+    PolyLogarithmicModel(),
     ExponentialModel(),
-    SineModel()
+    SineModel(),
+    NegativeExponentialModel()
 ]
+
+model_names = get_all_names(models)
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("index.html", model_names=model_names)
 
 @app.route('/get_best_fit', methods=['POST'])
 def get_best_fit():
