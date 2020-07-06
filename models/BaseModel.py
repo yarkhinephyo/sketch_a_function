@@ -2,7 +2,7 @@ import sys
 sys.path.append(".")
 
 from abc import ABC, abstractmethod
-from models.Function import Function
+from .Function import Function
 import numpy as np
 
 class BaseModel(ABC):

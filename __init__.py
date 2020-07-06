@@ -1,17 +1,15 @@
 from flask import Flask, redirect, url_for, request, render_template, jsonify
 import img_parser
 
-from models.PolynomialModel import PolynomialModel
-from models.LogarithmicModel import LogarithmicModel
-from models.ExponentialModel import ExponentialModel
-from models.model_eval import *
+from models import *
 
 app = Flask(__name__)
 
 models = [
     PolynomialModel(),
     LogarithmicModel(),
-    ExponentialModel()
+    ExponentialModel(),
+    SineModel()
 ]
 
 @app.route('/')
@@ -21,6 +19,7 @@ def index():
 @app.route('/get_best_fit', methods=['POST'])
 def get_best_fit():
     payload = request.get_json()
+
     if not payload['imgInput']:
         return jsonify({"error": "empty"})
 
@@ -37,7 +36,8 @@ def get_best_fit():
         "imgOutput": base64, 
         "equation_string": best_function.equation_string,
         "model_name": best_function.model_name,
-        "mse": best_function.mse
+        "mse": best_function.mse,
+        "error": "none"
     })
 
 if __name__ == "__main__":

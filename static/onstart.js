@@ -5,6 +5,7 @@ $(document).ready(function() {
     $valueSpan.html($value.val());
     $value.on('input change', () => {
         $valueSpan.html($value.val());
+        get_best_fit();
     });
 });
 
@@ -38,15 +39,22 @@ async function get_best_fit(){
 
     const myJson = await response.json(); //extract JSON from the http response
 
-    if(!myJson["error"]){
+    if(myJson["error"] !== "empty"){
         const display_canvas = document.getElementById("display_canvas");
         display_canvas.src = "data:image/png;base64," + myJson["imgOutput"];
         equation_string.innerHTML = myJson["equation_string"];
         model_name.innerHTML = myJson["model_name"];
         mse.innerHTML = myJson["mse"];
     } else {
-        erase_drawing()
+        erase_model();
     }
+}
+
+function erase_model(){
+    display_canvas.src = "";
+    equation_string.innerHTML = "";
+    model_name.innerHTML = "";
+    mse.innerHTML = "";
 }
 
 function erase_drawing(){

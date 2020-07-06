@@ -1,5 +1,5 @@
-from models.BaseModel import BaseModel
-from models.Function import Function
+from .BaseModel import BaseModel
+from .Function import Function
 import numpy as np
 
 from numpy.polynomial.polynomial import polyfit
