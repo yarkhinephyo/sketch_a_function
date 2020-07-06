@@ -21,6 +21,7 @@ var slider = document.getElementById("slider");
 var equation_string = document.getElementById("equation_string");
 var model_name = document.getElementById("model_name");
 var mse = document.getElementById("mse");
+var model_checkboxes = document.getElementsByName('model_checkboxes');
 
 async function get_best_fit(){
     console.log("Submitting drawing...");
@@ -32,22 +33,41 @@ async function get_best_fit(){
         method: 'POST',
         body: JSON.stringify({
             'imgInput': imgInput,
-            'complexity': complexity
+            'complexity': complexity,
+            'selected_models': get_selected_models()
         }), 
         headers: {'Content-Type': 'application/json'}
     });
 
     const myJson = await response.json(); //extract JSON from the http response
 
-    if(myJson["error"] !== "empty"){
+    if(myJson["error"] === "None"){
         const display_canvas = document.getElementById("display_canvas");
         display_canvas.src = "data:image/png;base64," + myJson["imgOutput"];
         equation_string.innerHTML = myJson["equation_string"];
         model_name.innerHTML = myJson["model_name"];
-        mse.innerHTML = myJson["mse"];
+        mse.innerHTML = "MSE: " + myJson["mse"];
     } else {
         erase_model();
+        mse.innerHTML = "Error: " + myJson["error"];
+    } 
+}
+
+function get_selected_models(){
+    let checkbox_array = [...model_checkboxes];
+    if(checkbox_array.length === 0){
+        erase_drawing();
+        erase_model();
+        return '';
     }
+
+    let selected_models = checkbox_array.filter(checkbox => 
+        checkbox.checked
+    ).map(checkbox => 
+        checkbox.value
+    );
+
+    return selected_models.toString();
 }
 
 function erase_model(){
@@ -59,4 +79,5 @@ function erase_model(){
 
 function erase_drawing(){
     myBoard.reset({ background: true });
+    erase_model();
 }
