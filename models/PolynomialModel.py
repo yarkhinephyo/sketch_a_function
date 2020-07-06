@@ -22,4 +22,4 @@ class PolynomialModel(BaseModel):
 
         equation_string = " + ".join([f"({round(coef[i], 1)})x^{i}" for i in range(len(coef))])
 
-        return Function("Polynomial", complexity_level, f"y = {equation_string}", (x0, y1), round(mse, 2))
+        return Function("Polynomial", complexity_level, f"y = {equation_string}", (x0, y1), mse)

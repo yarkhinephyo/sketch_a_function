@@ -3,13 +3,15 @@ import img_parser
 
 from models.PolynomialModel import PolynomialModel
 from models.LogarithmicModel import LogarithmicModel
+from models.ExponentialModel import ExponentialModel
 from models.model_eval import *
 
 app = Flask(__name__)
 
 models = [
     PolynomialModel(),
-    LogarithmicModel()
+    LogarithmicModel(),
+    ExponentialModel()
 ]
 
 @app.route('/')
@@ -34,7 +36,8 @@ def get_best_fit():
     return jsonify({
         "imgOutput": base64, 
         "equation_string": best_function.equation_string,
-        "model_name": best_function.model_name
+        "model_name": best_function.model_name,
+        "mse": best_function.mse
     })
 
 if __name__ == "__main__":
