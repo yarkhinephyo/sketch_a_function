@@ -44,7 +44,7 @@ class ExponentialModel(BaseModel):
             
         try:
             coef_neg, _ = curve_fit(func_neg, x0, y0, maxfev=2000)
-            y1_neg = func_pos(x0, *coef_neg.tolist())
+            y1_neg = func_neg(x0, *coef_neg.tolist())
             mse_neg = mean_squared_error(y0, y1_neg)
         except RuntimeError:
             return None
