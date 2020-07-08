@@ -9,7 +9,8 @@ models = [
     PolynomialModel(),
     PolyLogarithmicModel(),
     ExponentialModel(),
-    SineModel()
+    SineModel(),
+    ArctangentModel()
 ]
 
 model_names = get_all_names(models)
