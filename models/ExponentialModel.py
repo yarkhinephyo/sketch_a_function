@@ -22,10 +22,15 @@ class ExponentialModel(BaseModel):
         return lambda x, a, b1, c: a * np.exp(-b1 * x) + c
 
     def get_equation_string_positive(self, coef):
-        return f"{round(coef[0], 1)} \\cdot e^" + "{" + f"{round_sig(coef[1], 1)} \\cdot x" + "}" + " {:+g}".format(round(coef[2],1))
+        return f"({round_sig(coef[0])}) \\cdot e^" + "{" + f"{round_sig(coef[1], 1)} \\cdot x" + "}" + " {:+g}".format(round(coef[2],1))
 
     def get_equation_string_negative(self, coef):
-        return f"{round(coef[0], 1)} \\cdot e^" + "{-" + f"{round_sig(coef[1], 1)} \\cdot x" + "}" + " {:+g}".format(round(coef[2],1))
+        # Weird bug that returns -ve coef[1]
+        if coef[1] < 0:
+            coef[1] = coef[1] * (- 1)
+            return self.get_equation_string_positive(coef)
+
+        return f"({round_sig(coef[0])}) \\cdot e^" + "{-" + f"{round_sig(coef[1], 1)} \\cdot x" + "}" + " {:+g}".format(round(coef[2],1))
 
     def get_best_fit(self, complexity_level, x0, y0):
         
@@ -35,6 +40,7 @@ class ExponentialModel(BaseModel):
         func_pos = self.get_function_positive()
         func_neg = self.get_function_negative()
 
+        # Attempts both positive and negative exponential fitting
         try:
             coef_pos, _ = curve_fit(func_pos, x0, y0, maxfev=2000)
             y1_pos = func_pos(x0, *coef_pos.tolist())
@@ -49,6 +55,7 @@ class ExponentialModel(BaseModel):
         except RuntimeError:
             return None
 
+        # Returns the equation with less mean squared error
         if mse_pos < mse_neg:
             y1, mse = y1_pos, mse_pos
             equation_string = self.get_equation_string_positive(coef_pos)
@@ -56,12 +63,4 @@ class ExponentialModel(BaseModel):
             y1, mse = y1_neg, mse_neg
             equation_string = self.get_equation_string_negative(coef_neg)
 
-        return Function("Exponential", complexity_level, f"y = {equation_string}", (x0, y1), round_sig(mse))
-
-# class NegativeExponentialModel(ExponentialModel):
-
-#     def get_function_by_order(self):
-#         return lambda x, a, b1, c: a * np.exp(-b1 * x) + c
-    
-#     def get_equation_string(self, coef):
-#         return f"({round(coef[0], 1)}) e^(-{round_sig(coef[1])} * x) + {round(coef[2], 1)}"
+        return Function(self.get_model_name(), complexity_level, f"y = {equation_string}", (x0, y1), round_sig(mse))

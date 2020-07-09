@@ -2,6 +2,7 @@
 def sorted_functions_by_mse(models, selected_models, complexity_level, x0, y0):
     functions = []
 
+    # Filter away None values which indicate inability to fit
     models = [model for model in models if model.get_model_name() in selected_models]
 
     for model in models:
@@ -9,6 +10,7 @@ def sorted_functions_by_mse(models, selected_models, complexity_level, x0, y0):
         if func:
             functions.append(func)
     
+    # Sort models by mean squared error
     functions.sort(key=lambda func: func.mse)
     return functions
 

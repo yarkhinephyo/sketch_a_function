@@ -41,4 +41,4 @@ class PolyLogarithmicModel(BaseModel):
 
         equation_string = self.get_equation_string(coef)
 
-        return Function("PolyLogarithmic", complexity_level, f"y = {equation_string}", (x0, y1), round_sig(mse))
+        return Function(self.get_model_name(), complexity_level, f"y = {equation_string}", (x0, y1), round_sig(mse))

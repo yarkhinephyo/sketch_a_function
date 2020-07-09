@@ -20,8 +20,9 @@ def base64_to_array(base64_string):
 
 def base64_to_x_y(base64_string):
     '''
-    x = [-0.5, -0.4, -0.3, ... , 0.5, 0.6]
-    y = [-0.7, -0.5, -0.2, ... , 0.4, 0.6]
+    Returns:
+        x = [-0.5, -0.4, -0.3, ... , 0.5, 0.6]
+        y = [-0.7, -0.5, -0.2, ... , 0.4, 0.6]
     '''
     img_array = base64_to_array(base64_string)
 
@@ -42,8 +43,11 @@ def get_plotting_x_y(y_values):
 
 def x_y_to_base64(input_xy, output_xy):
     '''
-    input_xy : Tuple(x0, y0)
-    output_xy : Tuple(x1, y1)
+    Parameters
+        input_xy : Tuple(x0, y0)
+        output_xy : Tuple(x1, y1)
+    Returns:
+        base64 representation of the display
     '''
 
     x0, y0 = input_xy
@@ -62,7 +66,7 @@ def x_y_to_base64(input_xy, output_xy):
     img_bytes = buf.read()
 
     buf.close()
-    plt.close(fig=fig)
+    plt.close(fig=fig) # Close the figure to reduce memory usage
 
     base64_encoded_result_bytes = base64.b64encode(img_bytes)
     base64_encoded_result_str = base64_encoded_result_bytes.decode('ascii')

@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, request, render_template, jsonify
 import img_parser
 
+# Import all the custom models
 from models import *
 
 app = Flask(__name__)
@@ -10,9 +11,14 @@ models = [
     PolyLogarithmicModel(),
     ExponentialModel(),
     SineModel(),
-    ArctangentModel()
+    SinhModel(),
+    CoshModel(),
+    TanhModel(),
+    ArctangentModel(),
+    SigmoidModel()
 ]
 
+# For display as checkboxes
 model_names = get_all_names(models)
 
 @app.route('/')
@@ -23,6 +29,7 @@ def index():
 def get_best_fit():
     payload = request.get_json()
 
+    # Invalid if no drawing or no model selected
     if not payload['imgInput'] or not payload['selected_models']:
         return jsonify({"error": "Invalid inputs"})
 
@@ -30,10 +37,12 @@ def get_best_fit():
     complexity_level = int(payload['complexity'])
     selected_models = payload['selected_models'].split(",")
 
+    # base64 PNG to X and Y arrays
     x0, y0 = img_parser.base64_to_x_y(base64_string)
 
     sorted_functions = sorted_functions_by_mse(models, selected_models, complexity_level, x0, y0)
 
+    # If the list of valid functions is empty
     if not sorted_functions:
         return jsonify({"error": "Unable to fit"})
 

@@ -5,6 +5,7 @@ from abc import ABC, abstractmethod
 from .Function import Function
 import numpy as np
 
+# Base class for all custom models
 class BaseModel(ABC):
     
     @abstractmethod
@@ -21,4 +22,4 @@ class BaseModel(ABC):
         return: Function Object or None <if there is an error>
         """
 
-        return Function("Base Model", 2, "y = 2x + 5", ([], []), 3.33)
+        return Function(self.get_model_name(), 2, "y = 2x + 5", ([], []), 3.33)
