@@ -14,6 +14,20 @@ class PolynomialModel(BaseModel):
     def get_model_name(self):
         return "Polynomial"
 
+    def get_equation_string(self, coef):
+        degrees = []
+
+        for i in range(len(coef)):
+            if i == 0:
+                degrees.append('{:g}'.format(round_sig(coef[i], 2)) )
+            elif i == 1:
+                degrees.append('{:+g}x'.format(round_sig(coef[i], 2)) )
+            else:
+                degrees.append('{:+g}x^{}'.format(round_sig(coef[i], 2), i) )
+
+        return " ".join(degrees)
+
+
     def get_best_fit(self, complexity_level, x0, y0):
         
         coef = polyfit(x0, y0, complexity_level)
@@ -21,6 +35,6 @@ class PolynomialModel(BaseModel):
 
         mse = mean_squared_error(y0, y1)
 
-        equation_string = " + ".join([f"({round_sig(coef[i], 2)})x^{i}" for i in range(len(coef))])
+        equation_string = self.get_equation_string(coef)
 
-        return Function("Polynomial", complexity_level, f"y = {equation_string}", (x0, y1), mse)
+        return Function("Polynomial", complexity_level, f"y = {equation_string}", (x0, y1), round_sig(mse))

@@ -18,6 +18,10 @@ class ArctangentModel(BaseModel):
     def get_function_by_order(self):
         return lambda x, a, b, c, d: a * np.arctan(b*x + c) + d
 
+    def get_equation_string(self, coef):
+        return f"{round(coef[0], 1)} \\cdot tan^{{-1}}" + f"({round_sig(coef[1], 1)}x " + "{:+g})".format(round(coef[2], 1)) + " {:+g}".format(round(coef[3],1))
+
+
     def get_best_fit(self, complexity_level, x0, y0):
 
         x0 = np.array(x0)
@@ -33,6 +37,6 @@ class ArctangentModel(BaseModel):
 
         mse = mean_squared_error(y0, y1)
 
-        equation_string = f"({round(coef[0], 1)}) arctan({round_sig(coef[1], 1)} * x + {round(coef[2], 1)}) + {round(coef[3],1)}"
+        equation_string = self.get_equation_string(coef)
 
-        return Function("Arctan", complexity_level, f"y = {equation_string}", (x0, y1), mse)
+        return Function("Arctan", complexity_level, f"y = {equation_string}", (x0, y1), round_sig(mse))

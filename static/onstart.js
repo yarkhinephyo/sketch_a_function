@@ -44,7 +44,7 @@ async function get_best_fit(){
     if(myJson["error"] === "None"){
         const display_canvas = document.getElementById("display_canvas");
         display_canvas.src = "data:image/png;base64," + myJson["imgOutput"];
-        equation_string.innerHTML = myJson["equation_string"];
+        display_equation_string(myJson["equation_string"]);
         model_name.innerHTML = myJson["model_name"];
         mse.innerHTML = "MSE: " + myJson["mse"];
     } else {
@@ -81,3 +81,20 @@ function erase_drawing(){
     myBoard.reset({ background: true });
     erase_model();
 }
+
+async function display_equation_string(input_string) {
+    equation_string.innerHTML = "";
+
+    MathJax.texReset();
+    var options = MathJax.getMetricsFor(equation_string);
+
+    // The promise returns the typeset node, then document is updated
+    MathJax.tex2chtmlPromise(input_string, options).then(function (node) {
+      equation_string.appendChild(node);
+      MathJax.startup.document.clear();
+      MathJax.startup.document.updateDocument();
+
+    }).catch(function (err) {
+      equation_string.appendChild(document.createElement('pre')).appendChild(document.createTextNode(err.message));
+    });
+  }

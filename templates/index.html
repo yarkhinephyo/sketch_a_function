@@ -6,9 +6,14 @@
     <title>Sketch a function</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='drawingboard.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Serif/cmun-serif.css') }}"></link>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='drawingboard.css') }}">
     <style>
+        .latex_font {
+            font-family: 'Computer Modern Serif';
+        }
         .board {
             width:300px;
             height:300px;
@@ -43,7 +48,7 @@
                 </div>
             </div>
             <div class="mt-3 container">
-                <span class="label label-primary" style="font: size 2em;"><strong>Poly Degree</strong></span>
+                <span class="label label-primary latex_font" style="font: size 2em;"><strong>Poly Degree</strong></span>
                 <input id="slider" class="border-0 ml-1 mr-1" type="range" min="0" max="5" />
                 <span class="font-weight-bold text-primary ml-1 mt-1 valueSpan"></span>
             </div>
@@ -64,13 +69,13 @@
                 </div>
             </div>
             <div class="mt-3 container">
-                <strong><samp id="model_name"></samp></strong>
+                <strong><samp id="model_name" class="latex_font"></samp></strong>
             </div>
             <div class="mt-1 container">
-                <samp id="equation_string"></samp>
+                <samp id="mse" class="latex_font"></samp>
             </div>
             <div class="mt-1 container">
-                <samp id="mse"></samp>
+                <span id="equation_string"></span>
             </div>
         </div>
     </div>
