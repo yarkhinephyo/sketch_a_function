@@ -22,10 +22,10 @@ class ExponentialModel(BaseModel):
         return lambda x, a, b1, c: a * np.exp(-b1 * x) + c
 
     def get_equation_string_positive(self, coef):
-        return f"({round(coef[0], 1)}) e^({round_sig(coef[1])} * x) + {round(coef[2], 1)}"
+        return f"{round(coef[0], 1)} \\cdot e^" + "{" + f"{round_sig(coef[1], 1)} \\cdot x" + "}" + " {:+g}".format(round(coef[2],1))
 
     def get_equation_string_negative(self, coef):
-        return f"({round(coef[0], 1)}) e^(-{round_sig(coef[1])} * x) + {round(coef[2], 1)}"
+        return f"{round(coef[0], 1)} \\cdot e^" + "{-" + f"{round_sig(coef[1], 1)} \\cdot x" + "}" + " {:+g}".format(round(coef[2],1))
 
     def get_best_fit(self, complexity_level, x0, y0):
         
@@ -56,12 +56,12 @@ class ExponentialModel(BaseModel):
             y1, mse = y1_neg, mse_neg
             equation_string = self.get_equation_string_negative(coef_neg)
 
-        return Function("Exponential", complexity_level, f"y = {equation_string}", (x0, y1), mse)
+        return Function("Exponential", complexity_level, f"y = {equation_string}", (x0, y1), round_sig(mse))
 
-class NegativeExponentialModel(ExponentialModel):
+# class NegativeExponentialModel(ExponentialModel):
 
-    def get_function_by_order(self):
-        return lambda x, a, b1, c: a * np.exp(-b1 * x) + c
+#     def get_function_by_order(self):
+#         return lambda x, a, b1, c: a * np.exp(-b1 * x) + c
     
-    def get_equation_string(self, coef):
-        return f"({round(coef[0], 1)}) e^(-{round_sig(coef[1])} * x) + {round(coef[2], 1)}"
+#     def get_equation_string(self, coef):
+#         return f"({round(coef[0], 1)}) e^(-{round_sig(coef[1])} * x) + {round(coef[2], 1)}"

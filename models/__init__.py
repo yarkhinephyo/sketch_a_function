@@ -1,5 +1,5 @@
 
-from .ExponentialModel import ExponentialModel, NegativeExponentialModel
+from .ExponentialModel import ExponentialModel
 from .PolyLogarithmicModel import PolyLogarithmicModel
 from .model_eval import sorted_functions_by_mse, get_all_names
 from .PolynomialModel import PolynomialModel
@@ -12,7 +12,6 @@ __all__ = [
     'sorted_functions_by_mse',
     'PolynomialModel',
     'SineModel',
-    'NegativeExponentialModel',
     'get_all_names',
     'ArctangentModel'
 ]

@@ -50,7 +50,7 @@ def x_y_to_base64(input_xy, output_xy):
     x1, y1 = output_xy
 
     fig = plt.figure()
-    plt.plot(x0, y0, c='k')
+    plt.plot(x0, y0, c='k', alpha=0.5)
     plt.plot(x1, y1, c='g')
     plt.xlim((-1,1))
     plt.ylim((-1,1))

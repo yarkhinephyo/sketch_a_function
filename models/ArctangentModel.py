@@ -19,7 +19,7 @@ class ArctangentModel(BaseModel):
         return lambda x, a, b, c, d: a * np.arctan(b*x + c) + d
 
     def get_equation_string(self, coef):
-        return f"{round(coef[0], 1)} \\cdot tan^{{-1}}" + f"({round_sig(coef[1], 1)}x " + "{:+g})".format(round(coef[2], 1)) + " {:+g}".format(round(coef[3],1))
+        return f"{round(coef[0], 1)} \\cdot tan^{{-1}}" + f"({round_sig(coef[1], 1)} \\cdot x" + " {:+g})".format(round(coef[2], 1)) + " {:+g}".format(round(coef[3],1))
 
 
     def get_best_fit(self, complexity_level, x0, y0):

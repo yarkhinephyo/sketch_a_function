@@ -15,6 +15,19 @@ class PolyLogarithmicModel(BaseModel):
     def get_model_name(self):
         return "PolyLogarithmic"
 
+    def get_equation_string(self, coef):
+        degrees = []
+
+        for i in range(len(coef)):
+            if i == 0:
+                degrees.append('{:g}'.format(round_sig(coef[i], 2)) )
+            elif i == 1:
+                degrees.append('{:+g} \\cdot '.format(round_sig(coef[i], 2)) + "\\log{{x}}")
+            else:
+                degrees.append('{:+g} \\cdot '.format(round_sig(coef[i], 2)) + "(\\log{{x}})" + "^{}".format(i))
+
+        return " ".join(degrees)
+
     def get_best_fit(self, complexity_level, x0, y0):
 
         if (np.array(x0) < 0).any():
@@ -26,6 +39,6 @@ class PolyLogarithmicModel(BaseModel):
 
         mse = mean_squared_error(y0, y1)
 
-        equation_string = " + ".join([f"({round_sig(coef[i], 1)})(log x)^{i}" for i in range(len(coef))])
+        equation_string = self.get_equation_string(coef)
 
-        return Function("PolyLogarithmic", complexity_level, f"y = {equation_string}", (x0, y1), mse)
+        return Function("PolyLogarithmic", complexity_level, f"y = {equation_string}", (x0, y1), round_sig(mse))
