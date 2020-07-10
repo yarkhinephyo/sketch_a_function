@@ -9,7 +9,7 @@ Graphical Functions made from an effortless sketch
 4. The function with lowest MSE will be shown
 
 #### User Interface
-[Alt desc](https://raw.githubusercontent.com/yarkhinephyo/sketch_a_function/master/static/img/sample.jpg)
+![Alt desc](https://raw.githubusercontent.com/yarkhinephyo/sketch_a_function/master/static/img/sample.jpg)
 
 #### Installation
 ```
