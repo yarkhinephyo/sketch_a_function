@@ -13,10 +13,10 @@ Graphical Functions made from an effortless sketch
 
 #### Installation
 ```
-python -m venv venv
-pip install -r requirements.txt
-python __init__.py
+docker build -t sketch:1.0 .
+docker run -p 5000:80 sketch:1.0
 
+# The application will be accessible at localhost:5000
 # Custom Models can be added in the "models" package by subclassing BaseModel
 ```
 
