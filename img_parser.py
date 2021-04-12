@@ -72,35 +72,3 @@ def x_y_to_base64(input_xy, output_xy):
     base64_encoded_result_str = base64_encoded_result_bytes.decode('ascii')
 
     return base64_encoded_result_str
-    
-
-# def array_to_base64(numpy_array):
-#     '''
-#     intput array shape: (width, height, 4)
-#     '''
-
-#     in_mem_file = io.BytesIO()
-#     img = Image.fromarray(numpy_array)
-    
-#     img.save(in_mem_file, format = "PNG")
-#     in_mem_file.seek(0)
-#     img_bytes = in_mem_file.read()
-
-#     base64_encoded_result_bytes = base64.b64encode(img_bytes)
-#     base64_encoded_result_str = base64_encoded_result_bytes.decode('ascii')
-
-#     return base64_encoded_result_str
-
-# def y_values_to_base64(y_values):
-#     '''
-#     y_values = [np.nan, np.nan, -10, -8, -6, ... , 8, 10, np.nan]
-#     '''
-#     len_y_values = len(y_values)
-#     y_indices = [int(len_y_values / 2) - value if value else value for value in y_values]
-#     coordinates = [(y_indices[i], i, 3) for i in range(len_y_values) if not np.isnan(y_indices[i])]
-
-#     return_array = np.zeros((len_y_values, len_y_values, 4), dtype="uint8")
-#     for coordinate in coordinates:
-#         return_array[coordinate] = 255
-
-#     return array_to_base64(return_array)
