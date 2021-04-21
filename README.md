@@ -1,6 +1,10 @@
-## Sketch A Function
+Sketch A Function
+========
+![GitHub](https://img.shields.io/github/license/yarkhinephyo/sketch_a_function?style=flat-square)
 
 Graphical Functions made from an effortless sketch
+
+Medium: https://towardsdatascience.com/graphical-functions-made-from-an-effortless-sketch-266ccf95c46d
 
 #### Usage
 1. Choose functions for consideration
@@ -14,7 +18,7 @@ Graphical Functions made from an effortless sketch
 #### Installation
 ```
 docker build -t sketch:1.0 .
-docker run -p 5000:80 sketch:1.0
+docker run --rm -p 5000:5000 sketch:1.0
 
 # The application will be accessible at localhost:5000
 # Custom Models can be added in the "models" package by subclassing BaseModel
