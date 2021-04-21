@@ -22,6 +22,7 @@ var equation_string = document.getElementById("equation_string");
 var model_name = document.getElementById("model_name");
 var mse = document.getElementById("mse");
 var model_checkboxes = document.getElementsByName('model_checkboxes');
+var display_canvas = document.getElementById("display_canvas");
 
 async function get_best_fit(){
     console.log("Submitting drawing...");
@@ -29,6 +30,7 @@ async function get_best_fit(){
     var imgInput = (myBoard.blankCanvas == img) ? '' : img;
     var complexity = slider.value;
 
+    model_name.innerText = "Loading...";
     const response = await fetch('/get_best_fit', {
         method: 'POST',
         body: JSON.stringify({
@@ -38,12 +40,13 @@ async function get_best_fit(){
         }), 
         headers: {'Content-Type': 'application/json'}
     });
+    model_name.innerText = "";
 
     const myJson = await response.json(); //extract JSON from the http response
 
     if(myJson["error"] === "None"){
-        const display_canvas = document.getElementById("display_canvas");
         display_canvas.src = "data:image/png;base64," + myJson["imgOutput"];
+        display_canvas.style.display = "block";
         display_equation_string(myJson["equation_string"]);
         model_name.innerHTML = myJson["model_name"];
         mse.innerHTML = "MSE: " + myJson["mse"];
@@ -71,7 +74,7 @@ function get_selected_models(){
 }
 
 function erase_model(){
-    display_canvas.src = "";
+    display_canvas.style.display = "none";
     equation_string.innerHTML = "";
     model_name.innerHTML = "";
     mse.innerHTML = "";
